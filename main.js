@@ -23,10 +23,41 @@ const biznessHours = [
   "7pm",
   "8pm",
 ];
+const TableEl = document.getElementById("tabledatahtml");
+var totalOfTotals = 0; 
+
+function headerRender () {
+    const seattleRowEl = document.createElement("tr");
+    let seattleRowData = document.createElement("th");
+    seattleRowData.textContent = "  ";
+    seattleRowEl.appendChild(seattleRowData);
+
+    
+    for (let i = 0; i < biznessHours.length; i++) {
+      
+      // text content just makes text show up(Think of an alert with string concatenation!)
+      seattleRowData = document.createElement("td");
+      seattleRowData.textContent = biznessHours[i];
+      seattleRowEl.appendChild(seattleRowData);
+    }
+    seattleRowData = document.createElement("td");
+    seattleRowData.textContent = "Daily Location Total";
+    seattleRowEl.appendChild(seattleRowData);
+    TableEl.appendChild(seattleRowEl);
+};
+
+
+
+// Seattle.getCustomersPerHour();
+//Seattle.getCookiesSoldPerHour();
+
+headerRender();
+
+
+
 
 // first object 'Seattle'.
 let Seattle = {
-  locationName: "Seattle",
   minCustomers: 23, // ALL this info was given in instructions!
   maxCustomers: 65,
   avgCookieSale: 1,
@@ -34,13 +65,14 @@ let Seattle = {
   customersPerHour: [], // need an array to store all the customer numbers per hour
   cookiesSoldPerHour: [],
   totalDailyCookies: 0,
+  
 
   // methods~
 
   // method 1- Get customer function with randomizer
   getCustomersPerHour: function () {
-    const table = document.getElementById("cookieData");
-
+    //Use our random customer method. in same obj/instance so use 'this'
+    // aWe want to line our hour array from the loop with the customer per hour array
     for (let index = 0; index < biznessHours.length; index++) {
       // Add computed average customer value for EACH HOUR to our array.
       // the 'this' keyword... the props we using are in this class so we need 'this'
@@ -73,349 +105,374 @@ let Seattle = {
       // add to total
       this.totalDailyCookies += dailyCookies; //adding to the daily cookies
     }
+    console.log(this.cookiesSoldPerHour); //code works!!
   },
+  //3 method..GET IT ALL TO SHOW UP ON HTML PAGE
 
-  locationTableData: [],
-
-  getLocationTableData: function () {
-    this.locationTableData.push(this.locationName);
-    for (let i = 0; i < this.cookiesSoldPerHour.length; i++) {
-      this.locationTableData.push(`${this.cookiesSoldPerHour[i]} cookies`);
-    }
-    this.locationTableData.push(this.totalDailyCookies);
-  },
+  // declared a function..Could have been named anything we wanted!
 
   render() {
-    this.getCookiesSoldPerHour();
-    this.getLocationTableData();
-    let rowData = document.getElementById("cookieData");
+    const seattleRowEl = document.createElement("tr");
+    let seattleRowData = document.createElement("td");
+    seattleRowData.textContent = "Seattle";
+    seattleRowEl.appendChild(seattleRowData);
 
-    let dataLocation = rowData.insertRow();
-    for (let i = 0; i < this.locationTableData.length; i++) {
-      let dataCell = dataLocation.insertCell();
-      dataCell.textcontent = this.locationTableData[i];
+    this.getCookiesSoldPerHour(); //call a function
+    //Declared a variable ane named it the elemetn we will be putting it in.
+
+    //This is how we pull the hours!
+    for (let i = 0; i < biznessHours.length; i++) {
+      //declared another variable we will be putting in HTML
+
+      // text content just makes text show up(Think of an alert with string concatenation!)
+      seattleRowData = document.createElement("td");
+      seattleRowData.textContent = this.cookiesSoldPerHour[i];
+      seattleRowEl.appendChild(seattleRowData);
     }
+    seattleRowData = document.createElement("td");
+    seattleRowData.textContent = this.totalDailyCookies;
+    seattleRowEl.appendChild(seattleRowData);
+    TableEl.appendChild(seattleRowEl);
+
+    //   const totalCookieRowData = document.createElement('td');
+    //   totalCookieRowData.textContent = (Seattle.totalDailyCookies);
+    //   getTableEl.appendChild(totalCookieRowData);
   },
 };
+
+
 Seattle.render();
-Seattle.getCookiesSoldPerHour();
 
-console.log(Seattle.locationTableData);
 
-let Tokyo = {
-  locationName: "Tokyo",
-  minCustomers: 3, // ALL this info was given in instructions!
+ let Tokyo = {
+
+  minCustomers: 3,
   maxCustomers: 24,
   avgCookieSale: 1.2,
   // Both of these next 2 arrays should end up the same length as the array for each hr of the day 15
   customersPerHour: [], // need an array to store all the customer numbers per hour
   cookiesSoldPerHour: [],
-  totalDailyCookies: 0,
+  totalDailyCookies : 0,
 
-  // methods~
-
-  // method 1- Get customer function with randomizer
+  // methods
+ //1
   getCustomersPerHour: function () {
-    // const table = document.getElementById("cookieData");
+      //Use our random customer method. in same obj/instance so use 'this'
+      // add each random num of custs to our array where each index aligns with an hour in the day array
+      for (let index = 0; index < biznessHours.length; index++) {
+          // Add computed average customer value for each hour to our array/list
+          // the 'this' keyword... the props we using are in this class so we need 'this'
+          this.customersPerHour.push(getRandomNumberOfCustomersGivenARange(this.minCustomers, this.maxCustomers));// pass in min customers. pass in max customers.;
+          //console.log(this.customersPerHour[index]);
+      }
+      // lets see if we r even close. lets add some debug..... string literal
 
-    // const locationData = cookieData.insertRow();
-    for (let index = 0; index < biznessHours.length; index++) {
-      // Add computed average customer value for EACH HOUR to our array.
-      // the 'this' keyword... the props we using are in this class so we need 'this'
-      this.customersPerHour.push(
-        getRandomNumberOfCustomersGivenARange(
-          this.minCustomers,
-          this.maxCustomers
-        )
-      ); // pass in min customers. pass in max customers.;
-      //console.log(this.customersPerHour[index]);
-    }
   },
 
-  // now based on an AVERAGE number of customers for a GIVEN hr, we need to use that value from array random number along with data given for avg cookies per person and calcualte a guesstimate at number of cookies
-
-  //2 method~ getCookiesSoldPerHour
-
+  // now based on an average number of customers for a given hr, we need to us that value from array rando number along with data given for avg cookies per person and calcualte a guesstimate at number of cookies
+ //2
   getCookiesSoldPerHour: function () {
-    // initialize an ongoing total
-    this.getCustomersPerHour(); // load up customer data from last function
-    // lets load up our cookiesSoldPerHour by walking through each element in our average customers per hour array (number of customers * cookies sold per customer)
-    //loop returns again for each hour
-    for (let index = 0; index < biznessHours.length; index++) {
-      // Calc number of cookies
-      let dailyCookies = Math.floor(
-        this.customersPerHour[index] * this.avgCookieSale
-      );
-      // Lets floor it so we get a whole number
-      this.cookiesSoldPerHour.push(dailyCookies); // multiply the 2 values shove as new element into cookies sold array
-      // add to total
-      this.totalDailyCookies += dailyCookies; //adding to the daily cookies
-    }
-    //console.log(this.cookiesSoldPerHour); //code works!!
-  },
+      // initialize an ongoing total
+      //totalDailyCookies = 0;
+      this.getCustomersPerHour(); // load up customer data
+      // lets load up our cookiesSoldPerHour by walking through each element in our average customers per hour array (number of customers * cookies sold per customer)
+      for (let index = 0; index < biznessHours.length; index++) {
+          // Calc number of cookies
+          let dailyCookies = Math.floor(this.customersPerHour[index] * this.avgCookieSale);
+          // Lets floor it so we get a whole number
+          this.cookiesSoldPerHour.push(dailyCookies); // multiply the 2 values shove as new element into cookies sold array
+          // add to total
+          this.totalDailyCookies+=dailyCookies; //adding to the daily cookies
 
-  locationTableData: [],
+      }
+      console.log(this.cookiesSoldPerHour); //code works!!
 
-  getLocationTableData: function () {
-    this.locationTableData.push(this.locationName);
-    for (let i = 0; i < this.cookiesSoldPerHour.length; i++) {
-      this.locationTableData.push(`${this.cookiesSoldPerHour[i]} cookies`);
-    }
-    this.locationTableData.push(this.totalDailyCookies);
   },
 
   render() {
-    this.getCustomersPerHour();
-    this.getLocationTableData();
-    let rowData = document.getElementById("cookieData");
+    const tokyoRowEl = document.createElement("tr");
+    let tokyoRowData = document.createElement("td");
+    tokyoRowData.textContent = "Tokyo";
+    tokyoRowEl.appendChild(tokyoRowData);
 
-    let dataLocation = rowData.insertRow();
-    for (let i = 0; i < this.locationTableData; i++) {
-      let dataCell = dataLocation.insertCell();
-      dataCell.textcontent = this.locationTableData[i];
-      
+    this.getCookiesSoldPerHour(); //call a function
+    //Declared a variable ane named it the elemetn we will be putting it in.
+
+    //This is how we pull the hours!
+    for (let i = 0; i < biznessHours.length; i++) {
+      //declared another variable we will be putting in HTML
+
+      // text content just makes text show up(Think of an alert with string concatenation!)
+      tokyoRowData = document.createElement("td");
+      tokyoRowData.textContent = this.cookiesSoldPerHour[i];
+      tokyoRowEl.appendChild(tokyoRowData);
     }
-    console.log(Tokyo.locationTableData);
+    tokyoRowData = document.createElement("td");
+    tokyoRowData.textContent = this.totalDailyCookies;
+    tokyoRowEl.appendChild(tokyoRowData);
+    TableEl.appendChild(tokyoRowEl);
+
+    //   const totalCookieRowData = document.createElement('td');
+    //   totalCookieRowData.textContent = (Seattle.totalDailyCookies);
+    //   getTableEl.appendChild(totalCookieRowData);
   },
 };
+ //3
+  
+
+
+
 Tokyo.render();
 
-
-//Seattle.getCookiesSoldPerHour();
-
 let Dubai = {
-  locationName: "Dubai",
-  minCustomers: 11, // ALL this info was given in instructions!
+
+  minCustomers: 11,
   maxCustomers: 38,
   avgCookieSale: 3.7,
   // Both of these next 2 arrays should end up the same length as the array for each hr of the day 15
   customersPerHour: [], // need an array to store all the customer numbers per hour
   cookiesSoldPerHour: [],
-  totalDailyCookies: 0,
+  totalDailyCookies : 0,
 
-  // methods~
-
-  // method 1- Get customer function with randomizer
+  // methods
+ //1
   getCustomersPerHour: function () {
-    const table = document.getElementById("cookieData");
+      //Use our random customer method. in same obj/instance so use 'this'
+      // add each random num of custs to our array where each index aligns with an hour in the day array
+      for (let index = 0; index < biznessHours.length; index++) {
+          // Add computed average customer value for each hour to our array/list
+          // the 'this' keyword... the props we using are in this class so we need 'this'
+          this.customersPerHour.push(getRandomNumberOfCustomersGivenARange(this.minCustomers, this.maxCustomers));// pass in min customers. pass in max customers.;
+          //console.log(this.customersPerHour[index]);
+      }
+      // lets see if we r even close. lets add some debug..... string literal
 
-    const locationData = cookieData.insertRow();
-    for (let index = 0; index < biznessHours.length; index++) {
-      // Add computed average customer value for EACH HOUR to our array.
-      // the 'this' keyword... the props we using are in this class so we need 'this'
-      this.customersPerHour.push(
-        getRandomNumberOfCustomersGivenARange(
-          this.minCustomers,
-          this.maxCustomers
-        )
-      ); // pass in min customers. pass in max customers.;
-      //console.log(this.customersPerHour[index]);
-    }
   },
 
-  // now based on an AVERAGE number of customers for a GIVEN hr, we need to use that value from array random number along with data given for avg cookies per person and calcualte a guesstimate at number of cookies
-
-  //2 method~ getCookiesSoldPerHour
-
+  // now based on an average number of customers for a given hr, we need to us that value from array rando number along with data given for avg cookies per person and calcualte a guesstimate at number of cookies
+ //2
   getCookiesSoldPerHour: function () {
-    // initialize an ongoing total
-    this.getCustomersPerHour(); // load up customer data from last function
-    // lets load up our cookiesSoldPerHour by walking through each element in our average customers per hour array (number of customers * cookies sold per customer)
-    //loop returns again for each hour
-    for (let index = 0; index < biznessHours.length; index++) {
-      // Calc number of cookies
-      let dailyCookies = Math.floor(
-        this.customersPerHour[index] * this.avgCookieSale
-      );
-      // Lets floor it so we get a whole number
-      this.cookiesSoldPerHour.push(dailyCookies); // multiply the 2 values shove as new element into cookies sold array
-      // add to total
-      this.totalDailyCookies += dailyCookies; //adding to the daily cookies
-    }
-    console.log(this.cookiesSoldPerHour); //code works!!
+      // initialize an ongoing total
+      //totalDailyCookies = 0;
+      this.getCustomersPerHour(); // load up customer data
+      // lets load up our cookiesSoldPerHour by walking through each element in our average customers per hour array (number of customers * cookies sold per customer)
+      for (let index = 0; index < biznessHours.length; index++) {
+          // Calc number of cookies
+          let dailyCookies = Math.floor(this.customersPerHour[index] * this.avgCookieSale);
+          // Lets floor it so we get a whole number
+          this.cookiesSoldPerHour.push(dailyCookies); // multiply the 2 values shove as new element into cookies sold array
+          // add to total
+          this.totalDailyCookies+=dailyCookies; //adding to the daily cookies
+
+      }
+      console.log(this.cookiesSoldPerHour); //code works!!
+
   },
+ //3
+ render() {
+    const dubaiRowEl = document.createElement("tr");
+    let dubaiRowData = document.createElement("td");
+    dubaiRowData.textContent = "Dubai";
+    dubaiRowEl.appendChild(dubaiRowData);
 
-  locationTableData: [],
+    this.getCookiesSoldPerHour(); //call a function
+    //Declared a variable ane named it the elemetn we will be putting it in.
 
-  getLocationTableData: function () {
-    this.locationTableData.push(this.locationName);
-    for (let i = 0; i < this.cookiesSoldPerHour.length; i++) {
-      this.locationTableData.push(`${this.cookiesSoldPerHour[i]} cookies`);
+    //This is how we pull the hours!
+    for (let i = 0; i < biznessHours.length; i++) {
+      //declared another variable we will be putting in HTML
+
+      // text content just makes text show up(Think of an alert with string concatenation!)
+      dubaiRowData = document.createElement("td");
+      dubaiRowData.textContent = this.cookiesSoldPerHour[i];
+      dubaiRowEl.appendChild(dubaiRowData);
     }
-    this.locationTableData.push(this.totalDailyCookies);
-  },
+    dubaiRowData = document.createElement("td");
+    dubaiRowData.textContent = this.totalDailyCookies;
+    dubaiRowEl.appendChild(dubaiRowData);
+    TableEl.appendChild(dubaiRowEl);
 
-  render() {
-    this.getCustomersPerHour();
-    this.getLocationTableData();
-    let rowData = document.getElementById("cookieData");
+},
 
-    let dataLocation = rowData.insertRow();
-    for (let i = 0; i < this.locationTableData; i++) {
-      let dataCell = dataLocation.insertCell();
-      dataCell.textcontent = this.locationTableData[i];
-    }
-  },
 };
 Dubai.render();
-//Seattle.getCookiesSoldPerHour();
 
 let Paris = {
-  locationName: "Paris",
-  minCustomers: 20, // ALL this info was given in instructions!
+
+  minCustomers: 20,
   maxCustomers: 38,
   avgCookieSale: 2.3,
   // Both of these next 2 arrays should end up the same length as the array for each hr of the day 15
   customersPerHour: [], // need an array to store all the customer numbers per hour
   cookiesSoldPerHour: [],
-  totalDailyCookies: 0,
+  totalDailyCookies : 0,
 
-  // methods~
-
-  // method 1- Get customer function with randomizer
+  // methods
+ //1
   getCustomersPerHour: function () {
-    const table = document.getElementById("cookieData");
+      //Use our random customer method. in same obj/instance so use 'this'
+      // add each random num of custs to our array where each index aligns with an hour in the day array
+      for (let index = 0; index < biznessHours.length; index++) {
+          // Add computed average customer value for each hour to our array/list
+          // the 'this' keyword... the props we using are in this class so we need 'this'
+          this.customersPerHour.push(getRandomNumberOfCustomersGivenARange(this.minCustomers, this.maxCustomers));// pass in min customers. pass in max customers.;
+          //console.log(this.customersPerHour[index]);
+      }
+      // lets see if we r even close. lets add some debug..... string literal
 
-    const locationData = cookieData.insertRow();
-    for (let index = 0; index < biznessHours.length; index++) {
-      // Add computed average customer value for EACH HOUR to our array.
-      // the 'this' keyword... the props we using are in this class so we need 'this'
-      this.customersPerHour.push(
-        getRandomNumberOfCustomersGivenARange(
-          this.minCustomers,
-          this.maxCustomers
-        )
-      ); // pass in min customers. pass in max customers.;
-      //console.log(this.customersPerHour[index]);
-    }
   },
 
-  // now based on an AVERAGE number of customers for a GIVEN hr, we need to use that value from array random number along with data given for avg cookies per person and calcualte a guesstimate at number of cookies
-
-  //2 method~ getCookiesSoldPerHour
-
+  // now based on an average number of customers for a given hr, we need to us that value from array rando number along with data given for avg cookies per person and calcualte a guesstimate at number of cookies
+ //2
   getCookiesSoldPerHour: function () {
-    // initialize an ongoing total
-    this.getCustomersPerHour(); // load up customer data from last function
-    // lets load up our cookiesSoldPerHour by walking through each element in our average customers per hour array (number of customers * cookies sold per customer)
-    //loop returns again for each hour
-    for (let index = 0; index < biznessHours.length; index++) {
-      // Calc number of cookies
-      let dailyCookies = Math.floor(
-        this.customersPerHour[index] * this.avgCookieSale
-      );
-      // Lets floor it so we get a whole number
-      this.cookiesSoldPerHour.push(dailyCookies); // multiply the 2 values shove as new element into cookies sold array
-      // add to total
-      this.totalDailyCookies += dailyCookies; //adding to the daily cookies
-    }
-    console.log(this.cookiesSoldPerHour); //code works!!
+      // initialize an ongoing total
+      //totalDailyCookies = 0;
+      this.getCustomersPerHour(); // load up customer data
+      // lets load up our cookiesSoldPerHour by walking through each element in our average customers per hour array (number of customers * cookies sold per customer)
+      for (let index = 0; index < biznessHours.length; index++) {
+          // Calc number of cookies
+          let dailyCookies = Math.floor(this.customersPerHour[index] * this.avgCookieSale);
+          // Lets floor it so we get a whole number
+          this.cookiesSoldPerHour.push(dailyCookies); // multiply the 2 values shove as new element into cookies sold array
+          // add to total
+          this.totalDailyCookies+=dailyCookies; //adding to the daily cookies
+
+      }
+      console.log(this.cookiesSoldPerHour); //code works!!
+
   },
+ //3
 
-  locationTableData: [],
+ render() {
+    const parisRowEl = document.createElement("tr");
+    let parisRowData = document.createElement("td");
+    parisRowData.textContent = "Paris";
+    parisRowEl.appendChild(parisRowData);
 
-  getLocationTableData: function () {
-    this.locationTableData.push(this.locationName);
-    for (let i = 0; i < this.cookiesSoldPerHour.length; i++) {
-      this.locationTableData.push(`${this.cookiesSoldPerHour[i]} cookies`);
+    this.getCookiesSoldPerHour(); //call a function
+    //Declared a variable ane named it the elemetn we will be putting it in.
+
+    //This is how we pull the hours!
+    for (let i = 0; i < biznessHours.length; i++) {
+      //declared another variable we will be putting in HTML
+
+      // text content just makes text show up(Think of an alert with string concatenation!)
+      parisRowData = document.createElement("td");
+      parisRowData.textContent = this.cookiesSoldPerHour[i];
+      parisRowEl.appendChild(parisRowData);
     }
-    this.locationTableData.push(this.totalDailyCookies);
-  },
+    parisRowData = document.createElement("td");
+    parisRowData.textContent = this.totalDailyCookies;
+    parisRowEl.appendChild(parisRowData);
+    TableEl.appendChild(parisRowEl);
 
-  render() {
-    this.getCustomersPerHour();
-    this.getLocationTableData();
-    let rowData = document.getElementById("cookieData");
+  
 
-    let dataLocation = rowData.insertRow();
-    for (let i = 0; i < this.locationTableData; i++) {
-      let dataCell = dataLocation.insertCell();
-      dataCell.textcontent = this.locationTableData[i];
-    }
-  },
+}
 };
+
 Paris.render();
-// Seattle.getCookiesSoldPerHour();
 
 let Lima = {
-  locationName: "Lima",
-  minCustomers: 2, // ALL this info was given in instructions!
+
+  minCustomers: 2,
   maxCustomers: 16,
-  avgCookieSale: 2.6,
+  avgCookieSale: 4.6,
   // Both of these next 2 arrays should end up the same length as the array for each hr of the day 15
   customersPerHour: [], // need an array to store all the customer numbers per hour
   cookiesSoldPerHour: [],
-  totalDailyCookies: 0,
+  totalDailyCookies : 0,
 
-  // methods~
-
-  // method 1- Get customer function with randomizer
+  // methods
+ //1
   getCustomersPerHour: function () {
-    const table = document.getElementById("cookieData");
+      //Use our random customer method. in same obj/instance so use 'this'
+      // add each random num of custs to our array where each index aligns with an hour in the day array
+      for (let index = 0; index < biznessHours.length; index++) {
+          // Add computed average customer value for each hour to our array/list
+          // the 'this' keyword... the props we using are in this class so we need 'this'
+          this.customersPerHour.push(getRandomNumberOfCustomersGivenARange(this.minCustomers, this.maxCustomers));// pass in min customers. pass in max customers.;
+          //console.log(this.customersPerHour[index]);
+      }
+      // lets see if we r even close. lets add some debug..... string literal
 
-    const locationData = cookieData.insertRow();
-    for (let index = 0; index < biznessHours.length; index++) {
-      // Add computed average customer value for EACH HOUR to our array.
-      // the 'this' keyword... the props we using are in this class so we need 'this'
-      this.customersPerHour.push(
-        getRandomNumberOfCustomersGivenARange(
-          this.minCustomers,
-          this.maxCustomers
-        )
-      ); // pass in min customers. pass in max customers.;
-      //console.log(this.customersPerHour[index]);
-    }
   },
 
-  // now based on an AVERAGE number of customers for a GIVEN hr, we need to use that value from array random number along with data given for avg cookies per person and calcualte a guesstimate at number of cookies
-
-  //2 method~ getCookiesSoldPerHour
-
+  // now based on an average number of customers for a given hr, we need to us that value from array rando number along with data given for avg cookies per person and calcualte a guesstimate at number of cookies
+ //2
   getCookiesSoldPerHour: function () {
-    // initialize an ongoing total
-    this.getCustomersPerHour(); // load up customer data from last function
-    // lets load up our cookiesSoldPerHour by walking through each element in our average customers per hour array (number of customers * cookies sold per customer)
-    //loop returns again for each hour
-    for (let index = 0; index < biznessHours.length; index++) {
-      // Calc number of cookies
-      let dailyCookies = Math.floor(
-        this.customersPerHour[index] * this.avgCookieSale
-      );
-      // Lets floor it so we get a whole number
-      this.cookiesSoldPerHour.push(dailyCookies); // multiply the 2 values shove as new element into cookies sold array
-      // add to total
-      this.totalDailyCookies += dailyCookies; //adding to the daily cookies
-    }
-    console.log(this.cookiesSoldPerHour); //code works!!
+      // initialize an ongoing total
+      //totalDailyCookies = 0;
+      this.getCustomersPerHour(); // load up customer data
+      // lets load up our cookiesSoldPerHour by walking through each element in our average customers per hour array (number of customers * cookies sold per customer)
+      for (let index = 0; index < biznessHours.length; index++) {
+          // Calc number of cookies
+          let dailyCookies = Math.floor(this.customersPerHour[index] * this.avgCookieSale);
+          // Lets floor it so we get a whole number
+          this.cookiesSoldPerHour.push(dailyCookies); // multiply the 2 values shove as new element into cookies sold array
+          // add to total
+          this.totalDailyCookies+=dailyCookies; //adding to the daily cookies
+
+      }
+      console.log(this.cookiesSoldPerHour); //code works!!
+
   },
+ //3
+ render() {
+    const limaRowEl = document.createElement("tr");
+    let limaRowData = document.createElement("td");
+    limaRowData.textContent = "Lima";
+    limaRowEl.appendChild(limaRowData);
 
-  locationTableData: [],
+    this.getCookiesSoldPerHour(); //call a function
+    //Declared a variable ane named it the elemetn we will be putting it in.
 
-  getLocationTableData: function () {
-    this.locationTableData.push(this.locationName);
-    for (let i = 0; i < this.cookiesSoldPerHour.length; i++) {
-      this.locationTableData.push(`${this.cookiesSoldPerHour[i]} cookies`);
+    //This is how we pull the hours!
+    for (let i = 0; i < biznessHours.length; i++) {
+      //declared another variable we will be putting in HTML
+
+      // text content just makes text show up(Think of an alert with string concatenation!)
+      limaRowData = document.createElement("td");
+      limaRowData.textContent = this.cookiesSoldPerHour[i];
+      limaRowEl.appendChild(limaRowData);
     }
-    this.locationTableData.push(this.totalDailyCookies);
-  },
+    limaRowData = document.createElement("td");
+    limaRowData.textContent = this.totalDailyCookies;
+    limaRowEl.appendChild(limaRowData);
+    TableEl.appendChild(limaRowEl);
 
-  render() {
-    this.getCustomersPerHour();
-    this.getLocationTableData();
-    let rowData = document.getElementById("cookieData");
 
-    let dataLocation = rowData.insertRow();
-    for (let i = 0; i < this.locationTableData; i++) {
-      let dataCell = dataLocation.insertCell();
-      dataCell.textcontent = this.locationTableData[i];
-    }
-  },
+}
 };
+
 Lima.render();
-console.log(Lima.getLocationTableData());
 
 
 
+locationArray = [Seattle, Tokyo, Dubai, Paris, Lima];
+    function makeFooterRow() {
+  const tableRow = document.createElement('tr');
+  let tableHeader = document.createElement('th');
+  tableHeader.textContent = 'Hourly Totals for All Locations';
+  tableRow.appendChild(tableHeader);
+  let grandTotal = 0;
+  for (let i = 0; i < biznessHours.length; i++) {
+    let hourlyTotal = 0;
+    for (let index = 0; index < locationArray.length; index++){
+      hourlyTotal += locationArray[index].cookiesSoldPerHour[i];
+    totalOfTotals += grandTotal;
+    }
+    tableHeader = document.createElement('th');
+    tableHeader.textContent = hourlyTotal;
+    tableRow.appendChild(tableHeader);
+  }
+  tableHeader = document.createElement('th');
+  tableHeader.textContent = totalOfTotals;
+  tableRow.appendChild(tableHeader);
+  TableEl.appendChild(tableRow);
+}
+
+this.makeFooterRow();
+  
 
 
-// Seattle.getCookiesSoldPerHour();
