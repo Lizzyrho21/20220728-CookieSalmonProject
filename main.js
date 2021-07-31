@@ -186,4 +186,3 @@ function makeFooterRow() {
   footerRow.appendChild(footerHeader);
   TableEl.appendChild(footerRow);
 }
-
