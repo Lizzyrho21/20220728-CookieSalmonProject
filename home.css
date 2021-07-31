@@ -1,0 +1,180 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap');
+
+html, body {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+    font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif ;
+    background-color: #062F4F;
+}
+
+
+
+
+
+
+
+header{
+    margin-bottom:60px;
+    text-align: center;
+    width:100%;
+    padding: 0, 30px, 0 30px,
+}
+
+
+header > nav {
+    background-color: black;
+}
+
+header h1, h2 {
+    text-align: center;
+    color:honeydew;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-bottom:30px;
+}
+
+header  h1 {
+    font-size:50px;
+}
+
+header h2{
+    font-size:20px;
+}
+
+header nav, a {
+    text-decoration: none;
+    text-decoration: lavender;
+    color: honeydew;
+    text-align: center;
+    padding-left: 60px;
+    padding-right: 60px;
+    
+    
+}
+
+.sitecontainer{
+    text-align: center;
+    margin-bottom: 50%;
+    height: 100%;
+    width:100%;
+}
+
+.sitecontainer h1{
+    padding:20px;
+    color: lightblue;
+    font-weight: 200;
+    font-size: 40px;
+
+}
+
+.info{
+    background-color: #4717F6;
+    text-align: center;
+    margin: 30px;
+    width: 30%;
+    height: 40%;
+    position: absolute;
+
+}
+
+
+.info h2 {
+    padding-top:20px;
+}
+
+.info p {
+    color:mintcream;
+    font-size: small;
+    font-stretch: expanded;
+    line-height: 20px;
+}
+
+
+.info > a {
+    position: relative;
+    top:30px;
+    padding:30px;
+    color: navajowhite;
+    
+    
+}
+
+.locations{
+    background-color: midnightblue;
+    text-align: center;
+    padding: 40px;
+    position: absolute;
+    left: 39%;
+    margin:30px;
+    height: 30%;
+    
+    
+
+}
+
+.locations h2 {
+    position: relative;
+    bottom:25px;
+
+}
+
+.locations li{
+    list-style-type: none;
+    text-transform: uppercase;
+    text-align: center;
+    position: relative;
+    right: 25px;
+    bottom: 30px;
+    color: lemonchiffon;
+    line-height: 29px;
+}
+
+
+
+.locations p {
+    color:papayawhip;
+    font-size: medium;
+}
+
+.hour {
+    position: absolute;
+    left:70%;
+    background-color: #262228 ;
+    text-align: center;
+    margin: 30px;
+    width: 30%;
+    height: 40%;
+   
+
+    
+    
+}
+
+.hour p  {
+    color:whitesmoke;
+    font-size: x-large;
+    padding-top:30px;
+    margin-bottom: 30px;
+}
+
+
+
+.fishy{
+    position: relative;
+    margin-top: 80%;
+}
+
+.contact{
+    text-align: center;
+    background-color: rgb(0, 0, 0);
+    color:whitesmoke;
+    padding-bottom:30px;
+    
+}
+
+
+
+
