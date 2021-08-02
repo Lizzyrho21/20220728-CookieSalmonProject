@@ -123,22 +123,18 @@ function headerRender() {
 //Seattle.getCookiesSoldPerHour();
 
 headerRender();
-for (i = 0; i < storeLocations.length; i++) {
+for (i = 0; i < storeLocations.length; i++) {  
   storeLocations[i].render();
 }
+makeFooterRow();
 
-// location1.render();
-// location2.render();
-// location3.render();
-// location4.render();
-// location5.render();
+
 
 function addLocation(evt) {
   evt.preventDefault(); // prevent the default stuff from happening
-  // alert("form submit");
-  let table = document.getElementById("tabledatahtml");
-  let rowCount = storeLocations.length;
-  table.deleteRow(rowCount + 1);
+  let rows = document.getElementsByTagName("tr"); //html element name 
+  console.log("rowCount " + rows.length);
+  TableEl.deleteRow(rows.length - 1);
   let city = evt.target.cityname.value;
   let minCustomers = evt.target.mincustomers.value;
   let maxCustomers = evt.target.maxcustomers.value;
